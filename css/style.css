@@ -1,0 +1,72 @@
+foo{
+    margin:0;
+    padding:0;
+}
+body{
+    font-family:arial;
+}
+.title{
+    background:transparent url(heatMap.png) no-repeat top left;
+    width:461px;
+    height:136px;
+    margin:100;
+    padding:50;
+}
+
+.dot{
+    background-color:#32a0f5;
+    width:10px;
+    height:10px;
+    position:absolute;
+    -moz-border-radius:10px;
+    -webkit-border-radius:10px;
+    opacity:0.5;
+}
+.alliance{
+    width:10px;
+    height:10px;
+    position:absolute;
+    -moz-border-radius:10px;
+    -webkit-border-radius:10px;
+    opacity:0.3;
+}
+.colony{
+    width:10px;
+    height:10px;
+    position:absolute;
+    -moz-border-radius:10px;
+    -webkit-border-radius:10px;
+}
+
+.probe{
+    background-color:#cccccc;
+    width:10px;
+    height:10px;
+    position:absolute;
+    -moz-border-radius:10px;
+    -webkit-border-radius:10px;
+    opacity:0.5;
+}
+
+.zone{
+    position:relative;
+    left:100px;
+    width:500px;
+    height:250px;
+    border:1px solid blue;
+    background:#fff url(../bg.png) repeat top left;
+}
+.inner_zone{
+    position:absolute;
+    left:245px;
+    top:-505px;
+}
+.adjust{
+    position:absolute;
+    left:0;
+    top:0;
+}
+.hidden{
+    visibility:hidden;
+}
+
