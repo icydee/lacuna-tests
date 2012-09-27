@@ -11,13 +11,13 @@ use Lacuna;
 my $empire_name     = 'icydee';
 my $zone            = '0|2';
 
-my $known_alliances = {
-    905	=> { colour => '#1bbfe0', name => 'unknown'},
-     26 => { colour => '#e03c1b', name => 'Culture'},
-    150 => { colour => '#7ee01b', name => 'unknown'},
-    385 => { colour => '#7d1be0', name => 'unknown'},
-    376 => { colour => '#1b39e0', name => 'unknown'},
-    871 => { colour => '#e0c21b', name => 'unknown'},
+my $alliance_colour = {
+    905	=> '#1bbfe0',
+     26 => '#e03c1b',
+    150 => '#7ee01b',
+    385 => '#7d1be0',
+    376 => '#1b39e0',
+    871 => '#e0c21b',
 };
 
 my ($empire) = Lacuna->db->resultset('Empire')->search({name => $empire_name});
@@ -41,7 +41,7 @@ while (my $probe = $probes_rs->next) {
     # probes.push({x:-200, y:529});
     my $x = $probe->star->x;
     my $y = $probe->star->y;
-#    print "probes.push({x:$x, y:$y});\n";
+    print "probes.push({x:$x, y:$y});\n";
 }
 
 # stars siezed in the zone
@@ -62,19 +62,19 @@ while (my $star = $stars->next) {
     my $a = $alliance->id;
     my $x = $star->x;
     my $y = $star->y;
-#    print "stars.push({alliance: $a_id, x: $x, y: $y});\n";
+    print "stars.push({alliance: $a_id, x: $x, y: $y});\n";
 }
 
 # display all known alliances.
+print "var alliances = new Array();\n";
 foreach my $alliance_id (sort keys %$alliances) {
-    my $ka = $known_alliances->{$alliance_id};
-    if (not defined $ka) {
-        $ka = $knows_alliances->{$alliance_id} = {
-            colour  => '#000000',
-            name    => $alliances->{$alliance_id}->name,
-        }
-    }
-    
+    my $ka          = $alliance_colour->{$alliance_id};
+    my $colour      = defined $ka ? $ka : '#000000';
+    my $alliance    = Lacuna->db->resultset('Alliance')->find($alliance_id);
+    my $name        = $alliance->name;
+    print "alliances[$alliance_id] = {colour : '$colour', name : '$name'};\n";
 }
+my $max_alliances = scalar keys %$alliances;
+print "// there are $max_alliances alliances in zone $zone\n";
 1;
 
