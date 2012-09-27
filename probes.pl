@@ -9,7 +9,7 @@ use DateTime;
 use Lacuna;
 
 my $empire_name     = 'icydee';
-my $zone            = '0|2';
+my $zone            = '0|0';
 
 my $alliance_color = {
     905	=> '#1bbfe0',
