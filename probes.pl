@@ -11,7 +11,7 @@ use Lacuna;
 my $empire_name     = 'icydee';
 my $zone            = '0|2';
 
-my $alliance_colour = {
+my $alliance_color = {
     905	=> '#1bbfe0',
      26 => '#e03c1b',
     150 => '#7ee01b',
@@ -62,17 +62,38 @@ while (my $star = $stars->next) {
     my $a = $alliance->id;
     my $x = $star->x;
     my $y = $star->y;
-    print "stars.push({alliance: $a->id, x: $x, y: $y});\n";
+    print "stars.push({alliance: $a, x: $x, y: $y});\n";
 }
+
+# all colonies in this zone
+my $planets = Lacuna->db->resultset('Map::Body')->search({
+    empire_id   => {'!=' => undef},
+    zone        => $zone,
+});
+my $num_colonies = $planets->count;
+print "// There are $num_colonies colonies in zone $zone\n";
+print "var colonies = new Array();\n";
+while (my $planet = $planets->next) {
+    # colonies.push({alliance: 905, x:-246, y: 525});
+    my $a = $planet->empire->alliance_id || 0;
+    if ($a) {
+        $alliances->{$a} = $planet->empire->alliance;
+    }
+    my $x = $planet->x;
+    my $y = $planet->y;
+    print "colonies.push({alliance: $a, x: $x, y: $y});\n";
+}
+
 
 # display all known alliances.
 print "var alliances = new Array();\n";
+print "alliances[0] = {color : '#000000', name : 'un-allied'};\n";
 foreach my $alliance_id (sort keys %$alliances) {
-    my $ka          = $alliance_colour->{$alliance_id};
-    my $colour      = defined $ka ? $ka : '#000000';
+    my $ka          = $alliance_color->{$alliance_id};
+    my $color       = defined $ka ? $ka : '#000000';
     my $alliance    = Lacuna->db->resultset('Alliance')->find($alliance_id);
     my $name        = $alliance->name;
-    print "alliances[$alliance_id] = {colour : '$colour', name : '$name'};\n";
+    print "alliances[$alliance_id] = {color : '$color', name : '$name'};\n";
 }
 my $max_alliances = scalar keys %$alliances;
 print "// there are $max_alliances alliances in zone $zone\n";
