@@ -62,7 +62,7 @@ while (my $star = $stars->next) {
     my $a = $alliance->id;
     my $x = $star->x;
     my $y = $star->y;
-    print "stars.push({alliance: $a_id, x: $x, y: $y});\n";
+    print "stars.push({alliance: $a->id, x: $x, y: $y});\n";
 }
 
 # display all known alliances.
