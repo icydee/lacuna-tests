@@ -56,11 +56,28 @@ body{
     border:1px solid blue;
     background:#fff url(../bg.png) repeat top left;
 }
+.zone0{
+    position:relative;
+    left:100px;
+    width:500px;
+    height:500px;
+    border:1px solid blue;
+    background:#fff url(../bg.png) repeat top left;
+}
+
 .inner_zone{
     position:absolute;
     left:245px;
     top:-505px;
 }
+
+.inner_zone0{
+    position:absolute;
+    left:245px;
+    top:-5px;
+}
+
+
 .adjust{
     position:absolute;
     left:0;
