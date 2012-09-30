@@ -31,11 +31,11 @@ body{
     opacity:0.3;
 }
 .colony{
-    width:10px;
-    height:10px;
+    width:5px;
+    height:5px;
     position:absolute;
-    -moz-border-radius:10px;
-    -webkit-border-radius:10px;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
 }
 
 .probe{
