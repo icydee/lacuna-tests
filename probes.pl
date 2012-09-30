@@ -6,19 +6,11 @@ use warnings;
 use Data::Dumper;
 use 5.010;
 use DateTime;
+use Digest::MD5 qw(md5_hex);
 use Lacuna;
 
 my $empire_name     = 'icydee';
-my $zone            = '0|0';
-
-my $alliance_color = {
-    905	=> '#1bbfe0',
-     26 => '#e03c1b',
-    150 => '#7ee01b',
-    385 => '#7d1be0',
-    376 => '#1b39e0',
-    871 => '#e0c21b',
-};
+my $zone            = '0|2';
 
 my ($empire) = Lacuna->db->resultset('Empire')->search({name => $empire_name});
 my $all_stars =  Lacuna->db->resultset('Map::Star')->search({
@@ -89,8 +81,7 @@ while (my $planet = $planets->next) {
 print "var alliances = new Array();\n";
 print "alliances[0] = {color : '#000000', name : 'un-allied'};\n";
 foreach my $alliance_id (sort keys %$alliances) {
-    my $ka          = $alliance_color->{$alliance_id};
-    my $color       = defined $ka ? $ka : '#000000';
+    my $color       = '#' . substr(md5_hex($alliance_id),0,6);
     my $alliance    = Lacuna->db->resultset('Alliance')->find($alliance_id);
     my $name        = $alliance->name;
     print "alliances[$alliance_id] = {color : '$color', name : '$name'};\n";
