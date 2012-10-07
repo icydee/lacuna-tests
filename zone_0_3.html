@@ -1,0 +1,357 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+    <head>
+        <!-- select body.name,empire.alliance_id,body.x,body.y from body,empire where body.zone="0|2" and body.empire_id=empire.id order by x,y;-->
+        <title>Heatmap</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta name="description" content="A heat map with jQuery" />
+        <meta name="keywords" content="jquery, heatmap" />
+        <link rel="stylesheet" type="text/css" href="css/style.css" media="screen"/>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
+        <script>
+
+// There are 1652 stars in zone 0|3
+// There are 196 probes in zone 0|3
+var probes = new Array();
+probes.push({x:-199, y:750});
+probes.push({x:-154, y:750});
+probes.push({x:-139, y:750});
+probes.push({x:-124, y:750});
+probes.push({x:-49, y:750});
+probes.push({x:-34, y:750});
+probes.push({x:-34, y:750});
+probes.push({x:26, y:750});
+probes.push({x:71, y:750});
+probes.push({x:86, y:750});
+probes.push({x:-235, y:753});
+probes.push({x:-220, y:754});
+probes.push({x:-205, y:754});
+probes.push({x:-190, y:755});
+probes.push({x:-175, y:752});
+probes.push({x:-160, y:754});
+probes.push({x:-145, y:753});
+probes.push({x:-130, y:752});
+probes.push({x:-115, y:753});
+probes.push({x:-100, y:753});
+probes.push({x:-85, y:753});
+probes.push({x:-70, y:753});
+probes.push({x:-55, y:752});
+probes.push({x:-40, y:752});
+probes.push({x:-25, y:753});
+probes.push({x:-10, y:753});
+probes.push({x:5, y:753});
+probes.push({x:20, y:752});
+probes.push({x:35, y:755});
+probes.push({x:50, y:755});
+probes.push({x:65, y:754});
+probes.push({x:80, y:753});
+probes.push({x:95, y:754});
+probes.push({x:-243, y:758});
+probes.push({x:-228, y:760});
+probes.push({x:-213, y:760});
+probes.push({x:-198, y:759});
+probes.push({x:-183, y:760});
+probes.push({x:-168, y:758});
+probes.push({x:-153, y:759});
+probes.push({x:-138, y:760});
+probes.push({x:-123, y:759});
+probes.push({x:-108, y:759});
+probes.push({x:-93, y:757});
+probes.push({x:-78, y:757});
+probes.push({x:-63, y:757});
+probes.push({x:-48, y:758});
+probes.push({x:-33, y:760});
+probes.push({x:-18, y:757});
+probes.push({x:-3, y:757});
+probes.push({x:12, y:760});
+probes.push({x:27, y:760});
+probes.push({x:42, y:759});
+probes.push({x:57, y:759});
+probes.push({x:72, y:759});
+probes.push({x:87, y:760});
+probes.push({x:-236, y:764});
+probes.push({x:-221, y:765});
+probes.push({x:-206, y:762});
+probes.push({x:-191, y:765});
+probes.push({x:-176, y:763});
+probes.push({x:-161, y:764});
+probes.push({x:-146, y:765});
+probes.push({x:-131, y:764});
+probes.push({x:-116, y:763});
+probes.push({x:-101, y:763});
+probes.push({x:-86, y:764});
+probes.push({x:-71, y:764});
+probes.push({x:-56, y:762});
+probes.push({x:-41, y:764});
+probes.push({x:-26, y:762});
+probes.push({x:-11, y:762});
+probes.push({x:4, y:765});
+probes.push({x:19, y:764});
+probes.push({x:34, y:762});
+probes.push({x:49, y:763});
+probes.push({x:64, y:764});
+probes.push({x:79, y:763});
+probes.push({x:94, y:765});
+probes.push({x:-245, y:769});
+probes.push({x:-230, y:769});
+probes.push({x:-215, y:767});
+probes.push({x:-200, y:768});
+probes.push({x:-185, y:770});
+probes.push({x:-170, y:768});
+probes.push({x:-155, y:767});
+probes.push({x:-140, y:767});
+probes.push({x:-125, y:770});
+probes.push({x:-110, y:770});
+probes.push({x:-95, y:768});
+probes.push({x:-80, y:769});
+probes.push({x:-65, y:770});
+probes.push({x:-50, y:767});
+probes.push({x:-35, y:769});
+probes.push({x:-20, y:768});
+probes.push({x:-5, y:767});
+probes.push({x:10, y:768});
+probes.push({x:25, y:769});
+probes.push({x:40, y:767});
+probes.push({x:55, y:770});
+probes.push({x:70, y:770});
+probes.push({x:85, y:768});
+probes.push({x:-237, y:773});
+probes.push({x:-222, y:772});
+probes.push({x:-207, y:773});
+probes.push({x:-192, y:773});
+probes.push({x:-177, y:775});
+probes.push({x:-162, y:773});
+probes.push({x:-147, y:773});
+probes.push({x:-132, y:775});
+probes.push({x:-117, y:775});
+probes.push({x:-102, y:772});
+probes.push({x:-87, y:775});
+probes.push({x:-72, y:775});
+probes.push({x:-57, y:773});
+probes.push({x:-42, y:772});
+probes.push({x:-27, y:773});
+probes.push({x:-12, y:773});
+probes.push({x:3, y:773});
+probes.push({x:18, y:772});
+probes.push({x:33, y:775});
+probes.push({x:48, y:773});
+probes.push({x:63, y:774});
+probes.push({x:78, y:773});
+probes.push({x:93, y:773});
+probes.push({x:-244, y:779});
+probes.push({x:-229, y:777});
+probes.push({x:-214, y:780});
+probes.push({x:-199, y:778});
+probes.push({x:-184, y:778});
+probes.push({x:-169, y:779});
+probes.push({x:-154, y:777});
+probes.push({x:-139, y:779});
+probes.push({x:-124, y:779});
+probes.push({x:-109, y:777});
+probes.push({x:-94, y:778});
+probes.push({x:-79, y:780});
+probes.push({x:-64, y:777});
+probes.push({x:-49, y:777});
+probes.push({x:-34, y:780});
+probes.push({x:-19, y:780});
+probes.push({x:-4, y:779});
+probes.push({x:11, y:778});
+probes.push({x:26, y:780});
+probes.push({x:41, y:778});
+probes.push({x:56, y:777});
+probes.push({x:71, y:778});
+probes.push({x:86, y:778});
+probes.push({x:-236, y:783});
+probes.push({x:-221, y:785});
+probes.push({x:-206, y:785});
+probes.push({x:-191, y:783});
+probes.push({x:-176, y:783});
+probes.push({x:-161, y:784});
+probes.push({x:-146, y:785});
+probes.push({x:-131, y:784});
+probes.push({x:-116, y:785});
+probes.push({x:-101, y:785});
+probes.push({x:-86, y:782});
+probes.push({x:-86, y:782});
+probes.push({x:-71, y:782});
+probes.push({x:-71, y:782});
+probes.push({x:-56, y:783});
+probes.push({x:-41, y:782});
+probes.push({x:-26, y:784});
+probes.push({x:-11, y:783});
+probes.push({x:4, y:785});
+probes.push({x:19, y:783});
+probes.push({x:34, y:785});
+probes.push({x:49, y:785});
+probes.push({x:64, y:785});
+probes.push({x:79, y:785});
+probes.push({x:94, y:784});
+probes.push({x:-244, y:787});
+probes.push({x:-214, y:788});
+probes.push({x:-199, y:790});
+probes.push({x:-184, y:789});
+probes.push({x:-169, y:790});
+probes.push({x:-154, y:790});
+probes.push({x:-139, y:787});
+probes.push({x:-124, y:787});
+probes.push({x:-109, y:789});
+probes.push({x:-94, y:789});
+probes.push({x:-79, y:790});
+probes.push({x:-64, y:789});
+probes.push({x:-49, y:788});
+probes.push({x:-34, y:789});
+probes.push({x:-19, y:788});
+probes.push({x:-4, y:787});
+probes.push({x:11, y:789});
+probes.push({x:26, y:789});
+probes.push({x:41, y:787});
+probes.push({x:56, y:789});
+probes.push({x:71, y:787});
+probes.push({x:86, y:789});
+probes.push({x:-132, y:792});
+// There are 2 siezed stars in zone 0|3
+var stars = new Array();
+stars.push({alliance: 26, x: -49, y: 750});
+stars.push({alliance: 26, x: -34, y: 750});
+// There are 1 colonies in zone 0|3
+var colonies = new Array();
+colonies.push({alliance: 690, x: 203, y: 837});
+var alliances = new Array();
+alliances[0] = {color : '#000000', name : 'un-allied'};
+alliances[26] = {color : '#4e732c', name : 'Culture'};
+alliances[690] = {color : '#c06d06', name : 'S.M.A.'};
+// there are 2 alliances in zone 0|3
+
+  $(function() {
+    var html = '';
+    html = '';
+    for (var i = 0; i < probes.length; i++) {
+        var x = probes[i].x+245;
+        var y = 995 - probes[i].y;
+        html = html
+            +"<div class='probe' style='left:"
+            +x
+            +"px; top:"
+            +y
+            +"px;'></div>";
+    }
+    $('#probes').html(html);
+    html = '';
+    for (var i = 0; i < stars.length; i++) {
+        var x = stars[i].x+245;
+        var y = 995 - stars[i].y;
+        var a = alliances[stars[i].alliance].color;
+        html = html + "<div class='alliance' style='left:"
+            +x
+            +"px; top:"
+            +y
+            +"px; background-color:"
+            +a
+            +";'></div>";
+    }
+    $('#stars').html(html);
+    html = '';
+    for (var i = 0; i < colonies.length; i++) {
+        var x = colonies[i].x+248;
+        var y = 748 - colonies[i].y;
+        var a = alliances[colonies[i].alliance].color;
+        html = html + "<div class='colony' style='left:"
+            +x
+            +"px; top:"
+            +y
+            +"px; background-color:"
+            +a
+            +";'></div>";
+    }
+    $('#colonies').html(html);
+    html = '';
+    alliances.forEach(function(elem) {
+        var color  = elem.color;
+        var name    = elem.name;
+        html = html + "<p><span class='colony' style='background-color: "
+            + color
+            + ";'></span>&nbsp;&nbsp;&nbsp; "
+            + name
+            + "</p>";
+    });
+    $('#alliances').html(html);
+
+    $('#show_probes').click(function() {
+        if ($('#show_probes').attr('checked')) {
+            $('#probes').removeClass('hidden');
+        }
+        else {
+            $('#probes').addClass('hidden');
+        }
+    });
+    $('#show_colonies').click(function() {
+        if ($('#show_colonies').attr('checked')) {
+            $('#colonies').removeClass('hidden');
+        }
+        else {
+            $('#colonies').addClass('hidden');
+        }
+    });
+    $('#show_stars').click(function() {
+        if ($('#show_stars').attr('checked')) {
+            $('#stars').removeClass('hidden');
+        }
+        else {
+            $('#stars').addClass('hidden');
+        }
+    });
+
+    html = '';
+    for (var i = 0; i < probes.length; i++) {
+        var x = probes[i].x+245;
+        var y = 995 - probes[i].y;
+        html = html
+            +"<div class='probe' style='left:"
+            +x
+            +"px; top:"
+            +y
+            +"px;'></div>";
+        $('#probes').html(html);
+    }
+    $(document).mousemove(function(e){
+        var offset = $('#zone').offset();
+        var x = Math.round(e.pageX -250 - offset.left);
+        var y = Math.round(offset.top - e.pageY + 1000);
+        if (x < -250 || x > 250 || y < 500 || y > 1000) {
+            $('#status').html('&nbsp;');
+        }
+        else {
+            $('#status').html(x +', '+ y);
+        }
+    });
+
+});
+
+
+        </script>
+    </head>
+    <body>
+        <div class="title">
+          <p>Show colonies: <input type="checkbox" id="show_colonies"></p>
+          <p>Show probes: <input type="checkbox" id="show_probes"></p>
+          <p>Show siezed stars: <input type="checkbox" id="show_stars"></p>
+        </div>
+        <h2 id="status">0,0</h2>
+        <div class="zone" id="zone">
+          <div id="probes" class="hidden">
+          </div>
+          <div id="stars" class="hidden">
+          </div>
+          <div id="colonies" class="hidden">
+          </div>
+        </div>
+        <div id = "alliances">
+          <p><span class='colony' style="background-color: #e03c1b;"></span>&nbsp;&nbsp;&nbsp; Culture</p>
+        </div>
+    </body>
+</html>
+
+
+
+

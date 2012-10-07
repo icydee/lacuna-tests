@@ -1,0 +1,738 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+    <head>
+        <!-- select body.name,empire.alliance_id,body.x,body.y from body,empire where body.zone="0|2" and body.empire_id=empire.id order by x,y;-->
+        <title>Heatmap</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta name="description" content="A heat map with jQuery" />
+        <meta name="keywords" content="jquery, heatmap" />
+        <link rel="stylesheet" type="text/css" href="css/style.css" media="screen"/>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
+        <script>
+
+
+
+
+// There are 1649 stars in zone 0|1
+// There are 144 probes in zone 0|1
+var probes = new Array();
+probes.push({x:-100, y:254});
+probes.push({x:-85, y:254});
+probes.push({x:-70, y:252});
+probes.push({x:185, y:252});
+probes.push({x:200, y:252});
+probes.push({x:-95, y:259});
+probes.push({x:-80, y:258});
+probes.push({x:190, y:257});
+probes.push({x:205, y:257});
+probes.push({x:-101, y:262});
+probes.push({x:184, y:264});
+probes.push({x:199, y:264});
+probes.push({x:-25, y:285});
+probes.push({x:-10, y:285});
+probes.push({x:5, y:283});
+probes.push({x:-63, y:290});
+probes.push({x:-48, y:290});
+probes.push({x:-33, y:287});
+probes.push({x:-18, y:287});
+probes.push({x:-3, y:290});
+probes.push({x:-72, y:293});
+probes.push({x:-57, y:293});
+probes.push({x:-42, y:293});
+probes.push({x:-27, y:294});
+probes.push({x:-12, y:292});
+probes.push({x:3, y:295});
+probes.push({x:-79, y:297});
+probes.push({x:-64, y:298});
+probes.push({x:-49, y:299});
+probes.push({x:-34, y:297});
+probes.push({x:-19, y:300});
+probes.push({x:-4, y:300});
+probes.push({x:11, y:298});
+probes.push({x:-207, y:304});
+probes.push({x:-87, y:302});
+probes.push({x:-72, y:303});
+probes.push({x:-57, y:302});
+probes.push({x:-42, y:304});
+probes.push({x:-27, y:305});
+probes.push({x:-12, y:305});
+probes.push({x:3, y:303});
+probes.push({x:-80, y:309});
+probes.push({x:-65, y:309});
+probes.push({x:-50, y:309});
+probes.push({x:-35, y:308});
+probes.push({x:-20, y:309});
+probes.push({x:-5, y:309});
+probes.push({x:-206, y:313});
+probes.push({x:-206, y:313});
+probes.push({x:-86, y:313});
+probes.push({x:-71, y:314});
+probes.push({x:-56, y:312});
+probes.push({x:-56, y:312});
+probes.push({x:-41, y:313});
+probes.push({x:-26, y:315});
+probes.push({x:-11, y:313});
+probes.push({x:4, y:314});
+probes.push({x:-79, y:320});
+probes.push({x:-64, y:317});
+probes.push({x:-49, y:317});
+probes.push({x:-34, y:318});
+probes.push({x:-19, y:318});
+probes.push({x:-4, y:319});
+probes.push({x:11, y:319});
+probes.push({x:-86, y:325});
+probes.push({x:-71, y:325});
+probes.push({x:-56, y:322});
+probes.push({x:-41, y:325});
+probes.push({x:-26, y:322});
+probes.push({x:-11, y:322});
+probes.push({x:4, y:324});
+probes.push({x:-183, y:327});
+probes.push({x:-78, y:330});
+probes.push({x:-63, y:328});
+probes.push({x:-48, y:327});
+probes.push({x:-33, y:327});
+probes.push({x:-18, y:328});
+probes.push({x:-3, y:327});
+probes.push({x:-3, y:327});
+probes.push({x:-191, y:333});
+probes.push({x:-71, y:332});
+probes.push({x:-56, y:332});
+probes.push({x:-41, y:334});
+probes.push({x:-26, y:332});
+probes.push({x:-11, y:335});
+probes.push({x:4, y:335});
+probes.push({x:-184, y:339});
+probes.push({x:-79, y:338});
+probes.push({x:-64, y:338});
+probes.push({x:-49, y:338});
+probes.push({x:-34, y:338});
+probes.push({x:-19, y:340});
+probes.push({x:-4, y:337});
+probes.push({x:-87, y:342});
+probes.push({x:-72, y:342});
+probes.push({x:-57, y:344});
+probes.push({x:-42, y:344});
+probes.push({x:-27, y:345});
+probes.push({x:-12, y:343});
+probes.push({x:-185, y:350});
+probes.push({x:-80, y:348});
+probes.push({x:-65, y:350});
+probes.push({x:-50, y:347});
+probes.push({x:-86, y:355});
+probes.push({x:-71, y:354});
+probes.push({x:-56, y:352});
+probes.push({x:-41, y:354});
+probes.push({x:-95, y:360});
+probes.push({x:-65, y:358});
+probes.push({x:-50, y:357});
+probes.push({x:-56, y:363});
+probes.push({x:-41, y:365});
+probes.push({x:-49, y:368});
+probes.push({x:-72, y:373});
+probes.push({x:-57, y:374});
+probes.push({x:-169, y:408});
+probes.push({x:-79, y:408});
+probes.push({x:50, y:413});
+probes.push({x:-168, y:427});
+probes.push({x:-170, y:439});
+probes.push({x:-176, y:445});
+probes.push({x:-161, y:444});
+probes.push({x:154, y:444});
+probes.push({x:-168, y:450});
+probes.push({x:-153, y:447});
+probes.push({x:147, y:448});
+probes.push({x:162, y:448});
+probes.push({x:-162, y:455});
+probes.push({x:153, y:452});
+probes.push({x:-168, y:457});
+probes.push({x:-153, y:458});
+probes.push({x:162, y:458});
+probes.push({x:-163, y:462});
+probes.push({x:-42, y:493});
+probes.push({x:-27, y:492});
+probes.push({x:-12, y:492});
+probes.push({x:3, y:494});
+probes.push({x:-200, y:499});
+probes.push({x:-185, y:498});
+probes.push({x:-50, y:499});
+probes.push({x:-35, y:498});
+probes.push({x:-20, y:497});
+probes.push({x:-5, y:498});
+probes.push({x:25, y:499});
+// There are 230 siezed stars in zone 0|1
+var stars = new Array();
+stars.push({alliance: 690, x: -244, y: 250});
+stars.push({alliance: 690, x: -214, y: 250});
+stars.push({alliance: 385, x: -139, y: 250});
+stars.push({alliance: 385, x: -124, y: 250});
+stars.push({alliance: 26, x: -34, y: 250});
+stars.push({alliance: 690, x: -235, y: 254});
+stars.push({alliance: 690, x: -220, y: 252});
+stars.push({alliance: 385, x: -205, y: 254});
+stars.push({alliance: 385, x: -190, y: 254});
+stars.push({alliance: 385, x: -175, y: 254});
+stars.push({alliance: 385, x: -160, y: 252});
+stars.push({alliance: 385, x: -145, y: 255});
+stars.push({alliance: 26, x: -85, y: 254});
+stars.push({alliance: 26, x: -70, y: 252});
+stars.push({alliance: 26, x: -55, y: 255});
+stars.push({alliance: 26, x: -40, y: 252});
+stars.push({alliance: 385, x: 110, y: 253});
+stars.push({alliance: 385, x: 140, y: 252});
+stars.push({alliance: 150, x: 215, y: 253});
+stars.push({alliance: 150, x: 230, y: 252});
+stars.push({alliance: 150, x: 245, y: 254});
+stars.push({alliance: 690, x: -230, y: 257});
+stars.push({alliance: 690, x: -215, y: 258});
+stars.push({alliance: 385, x: -185, y: 259});
+stars.push({alliance: 385, x: -170, y: 259});
+stars.push({alliance: 385, x: -155, y: 259});
+stars.push({alliance: 385, x: -140, y: 260});
+stars.push({alliance: 385, x: -125, y: 257});
+stars.push({alliance: 26, x: -80, y: 258});
+stars.push({alliance: 26, x: -65, y: 259});
+stars.push({alliance: 26, x: -50, y: 259});
+stars.push({alliance: 26, x: -35, y: 260});
+stars.push({alliance: 385, x: 40, y: 257});
+stars.push({alliance: 385, x: 100, y: 260});
+stars.push({alliance: 150, x: 190, y: 257});
+stars.push({alliance: 150, x: 205, y: 257});
+stars.push({alliance: 150, x: 220, y: 259});
+stars.push({alliance: 150, x: 235, y: 259});
+stars.push({alliance: 385, x: -206, y: 264});
+stars.push({alliance: 385, x: -176, y: 262});
+stars.push({alliance: 385, x: -161, y: 264});
+stars.push({alliance: 385, x: -146, y: 262});
+stars.push({alliance: 385, x: 34, y: 264});
+stars.push({alliance: 385, x: 64, y: 264});
+stars.push({alliance: 385, x: 79, y: 265});
+stars.push({alliance: 385, x: 109, y: 264});
+stars.push({alliance: 150, x: 199, y: 264});
+stars.push({alliance: 150, x: 214, y: 262});
+stars.push({alliance: 150, x: 244, y: 262});
+stars.push({alliance: 385, x: -185, y: 267});
+stars.push({alliance: 385, x: -170, y: 270});
+stars.push({alliance: 385, x: -155, y: 267});
+stars.push({alliance: 385, x: -140, y: 268});
+stars.push({alliance: 385, x: -125, y: 270});
+stars.push({alliance: 26, x: -20, y: 268});
+stars.push({alliance: 385, x: 85, y: 270});
+stars.push({alliance: 385, x: 100, y: 268});
+stars.push({alliance: 385, x: 115, y: 268});
+stars.push({alliance: 150, x: 220, y: 268});
+stars.push({alliance: 385, x: -205, y: 274});
+stars.push({alliance: 385, x: -175, y: 273});
+stars.push({alliance: 385, x: -160, y: 274});
+stars.push({alliance: 385, x: -145, y: 272});
+stars.push({alliance: 385, x: -130, y: 272});
+stars.push({alliance: 26, x: -85, y: 275});
+stars.push({alliance: 26, x: -70, y: 272});
+stars.push({alliance: 385, x: 95, y: 274});
+stars.push({alliance: 385, x: 110, y: 273});
+stars.push({alliance: 385, x: 125, y: 275});
+stars.push({alliance: 385, x: -198, y: 278});
+stars.push({alliance: 385, x: -168, y: 280});
+stars.push({alliance: 385, x: -153, y: 280});
+stars.push({alliance: 26, x: -63, y: 279});
+stars.push({alliance: 385, x: 72, y: 278});
+stars.push({alliance: 385, x: 87, y: 279});
+stars.push({alliance: 385, x: 102, y: 277});
+stars.push({alliance: 385, x: 117, y: 279});
+stars.push({alliance: 385, x: -190, y: 282});
+stars.push({alliance: 385, x: -130, y: 285});
+stars.push({alliance: 26, x: -10, y: 285});
+stars.push({alliance: 385, x: 80, y: 282});
+stars.push({alliance: 385, x: 95, y: 282});
+stars.push({alliance: 385, x: 110, y: 283});
+stars.push({alliance: 385, x: 125, y: 284});
+stars.push({alliance: 385, x: -183, y: 287});
+stars.push({alliance: 385, x: -168, y: 290});
+stars.push({alliance: 385, x: -153, y: 287});
+stars.push({alliance: 385, x: -138, y: 289});
+stars.push({alliance: 26, x: -18, y: 287});
+stars.push({alliance: 385, x: 102, y: 288});
+stars.push({alliance: 385, x: 117, y: 290});
+stars.push({alliance: 385, x: 132, y: 288});
+stars.push({alliance: 211, x: 162, y: 290});
+stars.push({alliance: 385, x: -192, y: 293});
+stars.push({alliance: 385, x: -177, y: 295});
+stars.push({alliance: 385, x: -162, y: 292});
+stars.push({alliance: 385, x: -147, y: 295});
+stars.push({alliance: 385, x: -132, y: 293});
+stars.push({alliance: 26, x: -27, y: 294});
+stars.push({alliance: 385, x: 93, y: 293});
+stars.push({alliance: 385, x: 108, y: 292});
+stars.push({alliance: 385, x: 123, y: 295});
+stars.push({alliance: 385, x: 138, y: 294});
+stars.push({alliance: 211, x: 168, y: 294});
+stars.push({alliance: 211, x: 198, y: 294});
+stars.push({alliance: 690, x: -244, y: 300});
+stars.push({alliance: 26, x: -34, y: 297});
+stars.push({alliance: 385, x: 86, y: 297});
+stars.push({alliance: 385, x: 116, y: 298});
+stars.push({alliance: 385, x: 131, y: 298});
+stars.push({alliance: 211, x: 206, y: 298});
+stars.push({alliance: 385, x: 108, y: 302});
+stars.push({alliance: 211, x: 198, y: 302});
+stars.push({alliance: 385, x: 100, y: 309});
+stars.push({alliance: 385, x: 130, y: 307});
+stars.push({alliance: 385, x: 145, y: 308});
+stars.push({alliance: 273, x: 71, y: 317});
+stars.push({alliance: 273, x: 86, y: 317});
+stars.push({alliance: 385, x: 116, y: 320});
+stars.push({alliance: 26, x: -56, y: 322});
+stars.push({alliance: 26, x: -41, y: 325});
+stars.push({alliance: 273, x: 79, y: 324});
+stars.push({alliance: 273, x: 94, y: 325});
+stars.push({alliance: 273, x: 109, y: 323});
+stars.push({alliance: 385, x: 124, y: 322});
+stars.push({alliance: 26, x: -63, y: 328});
+stars.push({alliance: 26, x: -48, y: 327});
+stars.push({alliance: 150, x: 57, y: 328});
+stars.push({alliance: 273, x: 87, y: 329});
+stars.push({alliance: 273, x: 102, y: 329});
+stars.push({alliance: 150, x: 132, y: 330});
+stars.push({alliance: 150, x: 147, y: 327});
+stars.push({alliance: 26, x: -56, y: 332});
+stars.push({alliance: 26, x: -41, y: 334});
+stars.push({alliance: 150, x: 64, y: 333});
+stars.push({alliance: 273, x: 94, y: 334});
+stars.push({alliance: 273, x: 109, y: 332});
+stars.push({alliance: 150, x: 139, y: 333});
+stars.push({alliance: 273, x: 199, y: 333});
+stars.push({alliance: 26, x: -49, y: 338});
+stars.push({alliance: 150, x: 56, y: 340});
+stars.push({alliance: 150, x: 71, y: 337});
+stars.push({alliance: 273, x: 86, y: 338});
+stars.push({alliance: 273, x: 101, y: 339});
+stars.push({alliance: 150, x: 131, y: 340});
+stars.push({alliance: 150, x: 146, y: 340});
+stars.push({alliance: 273, x: 78, y: 345});
+stars.push({alliance: 273, x: 93, y: 342});
+stars.push({alliance: 273, x: 108, y: 344});
+stars.push({alliance: 150, x: 123, y: 342});
+stars.push({alliance: 150, x: 138, y: 342});
+stars.push({alliance: 150, x: 153, y: 343});
+stars.push({alliance: 273, x: 55, y: 350});
+stars.push({alliance: 150, x: 85, y: 350});
+stars.push({alliance: 273, x: 100, y: 350});
+stars.push({alliance: 150, x: 115, y: 347});
+stars.push({alliance: 150, x: 130, y: 347});
+stars.push({alliance: 150, x: 145, y: 349});
+stars.push({alliance: 150, x: 160, y: 350});
+stars.push({alliance: 273, x: 64, y: 354});
+stars.push({alliance: 150, x: 79, y: 352});
+stars.push({alliance: 150, x: 94, y: 352});
+stars.push({alliance: 150, x: 109, y: 355});
+stars.push({alliance: 150, x: 124, y: 354});
+stars.push({alliance: 150, x: 139, y: 355});
+stars.push({alliance: 150, x: 154, y: 353});
+stars.push({alliance: 150, x: 70, y: 358});
+stars.push({alliance: 150, x: 85, y: 360});
+stars.push({alliance: 150, x: 100, y: 359});
+stars.push({alliance: 150, x: 115, y: 359});
+stars.push({alliance: 150, x: 130, y: 357});
+stars.push({alliance: 150, x: 145, y: 358});
+stars.push({alliance: 150, x: 64, y: 363});
+stars.push({alliance: 150, x: 79, y: 363});
+stars.push({alliance: 150, x: 94, y: 364});
+stars.push({alliance: 150, x: 109, y: 362});
+stars.push({alliance: 150, x: 124, y: 365});
+stars.push({alliance: 150, x: 56, y: 369});
+stars.push({alliance: 150, x: 71, y: 369});
+stars.push({alliance: 150, x: 86, y: 370});
+stars.push({alliance: 150, x: 101, y: 368});
+stars.push({alliance: 150, x: 116, y: 370});
+stars.push({alliance: 150, x: 131, y: 367});
+stars.push({alliance: 150, x: 48, y: 375});
+stars.push({alliance: 150, x: 63, y: 372});
+stars.push({alliance: 150, x: 78, y: 372});
+stars.push({alliance: 150, x: 93, y: 373});
+stars.push({alliance: 150, x: 108, y: 374});
+stars.push({alliance: 150, x: 123, y: 374});
+stars.push({alliance: 150, x: 40, y: 379});
+stars.push({alliance: 150, x: 70, y: 379});
+stars.push({alliance: 150, x: 85, y: 380});
+stars.push({alliance: 150, x: 100, y: 379});
+stars.push({alliance: 150, x: 115, y: 380});
+stars.push({alliance: 150, x: 63, y: 385});
+stars.push({alliance: 150, x: 78, y: 383});
+stars.push({alliance: 150, x: 93, y: 383});
+stars.push({alliance: 150, x: 108, y: 382});
+stars.push({alliance: 150, x: 123, y: 384});
+stars.push({alliance: 150, x: 26, y: 389});
+stars.push({alliance: 150, x: 71, y: 387});
+stars.push({alliance: 150, x: 86, y: 390});
+stars.push({alliance: 150, x: 101, y: 390});
+stars.push({alliance: 150, x: 116, y: 390});
+stars.push({alliance: 150, x: 63, y: 395});
+stars.push({alliance: 150, x: 78, y: 392});
+stars.push({alliance: 150, x: 93, y: 393});
+stars.push({alliance: 150, x: 108, y: 393});
+stars.push({alliance: 150, x: 123, y: 393});
+stars.push({alliance: 150, x: 70, y: 397});
+stars.push({alliance: 150, x: 85, y: 398});
+stars.push({alliance: 150, x: 100, y: 397});
+stars.push({alliance: 150, x: 78, y: 403});
+stars.push({alliance: 26, x: -79, y: 408});
+stars.push({alliance: 376, x: 4, y: 433});
+stars.push({alliance: 376, x: 19, y: 474});
+stars.push({alliance: 376, x: 26, y: 477});
+stars.push({alliance: 376, x: 26, y: 488});
+stars.push({alliance: 376, x: 56, y: 489});
+stars.push({alliance: 26, x: 71, y: 488});
+stars.push({alliance: 376, x: 18, y: 492});
+stars.push({alliance: 376, x: 33, y: 494});
+stars.push({alliance: 376, x: 48, y: 492});
+stars.push({alliance: 376, x: 63, y: 494});
+stars.push({alliance: 26, x: 78, y: 495});
+stars.push({alliance: 26, x: -35, y: 498});
+stars.push({alliance: 376, x: 25, y: 499});
+stars.push({alliance: 376, x: 55, y: 499});
+stars.push({alliance: 26, x: 70, y: 497});
+stars.push({alliance: 26, x: 100, y: 497});
+// There are 190 colonies in zone 0|1
+var colonies = new Array();
+colonies.push({alliance: 0, x: -122, y: 249});
+colonies.push({alliance: 0, x: -218, y: 253});
+colonies.push({alliance: 0, x: -99, y: 252});
+colonies.push({alliance: 0, x: -27, y: 252});
+colonies.push({alliance: 385, x: -158, y: 253});
+colonies.push({alliance: 385, x: -163, y: 263});
+colonies.push({alliance: 7, x: -216, y: 249});
+colonies.push({alliance: 7, x: -247, y: 259});
+colonies.push({alliance: 7, x: -237, y: 261});
+colonies.push({alliance: 7, x: -189, y: 263});
+colonies.push({alliance: 7, x: -188, y: 272});
+colonies.push({alliance: 7, x: -224, y: 293});
+colonies.push({alliance: 7, x: -206, y: 302});
+colonies.push({alliance: 385, x: 72, y: 259});
+colonies.push({alliance: 385, x: -174, y: 261});
+colonies.push({alliance: 385, x: -169, y: 268});
+colonies.push({alliance: 0, x: 64, y: 257});
+colonies.push({alliance: 26, x: 116, y: 256});
+colonies.push({alliance: 385, x: 81, y: 264});
+colonies.push({alliance: 385, x: 111, y: 265});
+colonies.push({alliance: 385, x: 107, y: 263});
+colonies.push({alliance: 385, x: 87, y: 271});
+colonies.push({alliance: 385, x: 116, y: 266});
+colonies.push({alliance: 385, x: 113, y: 267});
+colonies.push({alliance: 385, x: 111, y: 275});
+colonies.push({alliance: 385, x: 112, y: 274});
+colonies.push({alliance: 385, x: 112, y: 272});
+colonies.push({alliance: 385, x: 111, y: 271});
+colonies.push({alliance: 385, x: 108, y: 272});
+colonies.push({alliance: 385, x: 103, y: 275});
+colonies.push({alliance: 385, x: 94, y: 280});
+colonies.push({alliance: 385, x: 93, y: 281});
+colonies.push({alliance: 385, x: 112, y: 282});
+colonies.push({alliance: 385, x: 110, y: 291});
+colonies.push({alliance: 385, x: 109, y: 290});
+colonies.push({alliance: 690, x: -203, y: 253});
+colonies.push({alliance: 385, x: -159, y: 250});
+colonies.push({alliance: 385, x: -147, y: 256});
+colonies.push({alliance: 385, x: -128, y: 256});
+colonies.push({alliance: 385, x: -198, y: 261});
+colonies.push({alliance: 385, x: -162, y: 262});
+colonies.push({alliance: 385, x: -114, y: 263});
+colonies.push({alliance: 385, x: -186, y: 265});
+colonies.push({alliance: 385, x: -138, y: 267});
+colonies.push({alliance: 385, x: -123, y: 269});
+colonies.push({alliance: 385, x: -143, y: 271});
+colonies.push({alliance: 385, x: -129, y: 274});
+colonies.push({alliance: 385, x: -136, y: 278});
+colonies.push({alliance: 385, x: -144, y: 286});
+colonies.push({alliance: 385, x: -144, y: 282});
+colonies.push({alliance: 385, x: -215, y: 290});
+colonies.push({alliance: 385, x: -191, y: 291});
+colonies.push({alliance: 385, x: -179, y: 296});
+colonies.push({alliance: 385, x: -161, y: 290});
+colonies.push({alliance: 385, x: -168, y: 298});
+colonies.push({alliance: 385, x: -161, y: 254});
+colonies.push({alliance: 385, x: -162, y: 251});
+colonies.push({alliance: 385, x: -122, y: 320});
+colonies.push({alliance: 385, x: -93, y: 361});
+colonies.push({alliance: 385, x: -93, y: 359});
+colonies.push({alliance: 385, x: -70, y: 372});
+colonies.push({alliance: 85, x: -2, y: 318});
+colonies.push({alliance: 85, x: 13, y: 338});
+colonies.push({alliance: 85, x: 12, y: 335});
+colonies.push({alliance: 85, x: 9, y: 338});
+colonies.push({alliance: 85, x: 9, y: 347});
+colonies.push({alliance: 85, x: -9, y: 363});
+colonies.push({alliance: 85, x: 95, y: 302});
+colonies.push({alliance: 85, x: 87, y: 309});
+colonies.push({alliance: 85, x: 81, y: 313});
+colonies.push({alliance: 85, x: 96, y: 311});
+colonies.push({alliance: 85, x: 88, y: 316});
+colonies.push({alliance: 85, x: 114, y: 249});
+colonies.push({alliance: 85, x: 81, y: 254});
+colonies.push({alliance: 85, x: 82, y: 253});
+colonies.push({alliance: 85, x: 79, y: 250});
+colonies.push({alliance: 85, x: 142, y: 273});
+colonies.push({alliance: 85, x: 154, y: 282});
+colonies.push({alliance: 85, x: 153, y: 283});
+colonies.push({alliance: 26, x: -40, y: 262});
+colonies.push({alliance: 26, x: -48, y: 308});
+colonies.push({alliance: 26, x: -46, y: 326});
+colonies.push({alliance: 26, x: -39, y: 324});
+colonies.push({alliance: 26, x: -70, y: 312});
+colonies.push({alliance: 26, x: -47, y: 329});
+colonies.push({alliance: 26, x: -47, y: 325});
+colonies.push({alliance: 26, x: -50, y: 326});
+colonies.push({alliance: 26, x: -2, y: 325});
+colonies.push({alliance: 26, x: -50, y: 336});
+colonies.push({alliance: 385, x: -27, y: 330});
+colonies.push({alliance: 385, x: -70, y: 393});
+colonies.push({alliance: 85, x: -228, y: 258});
+colonies.push({alliance: 441, x: 44, y: 330});
+colonies.push({alliance: 441, x: 44, y: 328});
+colonies.push({alliance: 441, x: 43, y: 327});
+colonies.push({alliance: 441, x: 51, y: 331});
+colonies.push({alliance: 441, x: 43, y: 336});
+colonies.push({alliance: 441, x: 40, y: 339});
+colonies.push({alliance: 441, x: 36, y: 352});
+colonies.push({alliance: 26, x: -99, y: 263});
+colonies.push({alliance: 385, x: -246, y: 249});
+colonies.push({alliance: 385, x: -152, y: 282});
+colonies.push({alliance: 385, x: -175, y: 341});
+colonies.push({alliance: 385, x: -213, y: 348});
+colonies.push({alliance: 385, x: -214, y: 345});
+colonies.push({alliance: 385, x: -216, y: 345});
+colonies.push({alliance: 211, x: 163, y: 288});
+colonies.push({alliance: 211, x: 169, y: 292});
+colonies.push({alliance: 211, x: 200, y: 293});
+colonies.push({alliance: 211, x: 199, y: 292});
+colonies.push({alliance: 211, x: 207, y: 296});
+colonies.push({alliance: 211, x: 170, y: 311});
+colonies.push({alliance: 85, x: 10, y: 317});
+colonies.push({alliance: 85, x: -13, y: 336});
+colonies.push({alliance: 85, x: -7, y: 348});
+colonies.push({alliance: 85, x: -22, y: 357});
+colonies.push({alliance: 85, x: -32, y: 371});
+colonies.push({alliance: 211, x: -133, y: 355});
+colonies.push({alliance: 211, x: -138, y: 359});
+colonies.push({alliance: 996, x: 21, y: 473});
+colonies.push({alliance: 0, x: 65, y: 394});
+colonies.push({alliance: 441, x: 10, y: 367});
+colonies.push({alliance: 273, x: 69, y: 316});
+colonies.push({alliance: 273, x: 77, y: 343});
+colonies.push({alliance: 273, x: 80, y: 344});
+colonies.push({alliance: 273, x: 95, y: 332});
+colonies.push({alliance: 273, x: 81, y: 323});
+colonies.push({alliance: 273, x: 57, y: 349});
+colonies.push({alliance: 273, x: 79, y: 347});
+colonies.push({alliance: 273, x: 209, y: 427});
+colonies.push({alliance: 273, x: 224, y: 429});
+colonies.push({alliance: 273, x: 216, y: 432});
+colonies.push({alliance: 273, x: 207, y: 439});
+colonies.push({alliance: 273, x: 222, y: 437});
+colonies.push({alliance: 211, x: -233, y: 255});
+colonies.push({alliance: 211, x: -237, y: 255});
+colonies.push({alliance: 211, x: -9, y: 334});
+colonies.push({alliance: 211, x: -11, y: 341});
+colonies.push({alliance: 211, x: -13, y: 341});
+colonies.push({alliance: 211, x: -14, y: 342});
+colonies.push({alliance: 211, x: -14, y: 344});
+colonies.push({alliance: 211, x: -22, y: 348});
+colonies.push({alliance: 211, x: -3, y: 348});
+colonies.push({alliance: 0, x: 6, y: 432});
+colonies.push({alliance: 273, x: -93, y: 258});
+colonies.push({alliance: 0, x: -92, y: 338});
+colonies.push({alliance: 0, x: -95, y: 337});
+colonies.push({alliance: 150, x: 22, y: 253});
+colonies.push({alliance: 150, x: 18, y: 251});
+colonies.push({alliance: 150, x: 18, y: 253});
+colonies.push({alliance: 150, x: 236, y: 355});
+colonies.push({alliance: 150, x: 234, y: 355});
+colonies.push({alliance: 273, x: 96, y: 335});
+colonies.push({alliance: 273, x: 79, y: 343});
+colonies.push({alliance: 211, x: -233, y: 253});
+colonies.push({alliance: 211, x: -234, y: 252});
+colonies.push({alliance: 211, x: -236, y: 252});
+colonies.push({alliance: 211, x: 197, y: 292});
+colonies.push({alliance: 26, x: -116, y: 252});
+colonies.push({alliance: 385, x: -113, y: 255});
+colonies.push({alliance: 905, x: -227, y: 481});
+colonies.push({alliance: 905, x: -228, y: 478});
+colonies.push({alliance: 905, x: -231, y: 479});
+colonies.push({alliance: 150, x: 93, y: 362});
+colonies.push({alliance: 150, x: 95, y: 362});
+colonies.push({alliance: 150, x: 95, y: 366});
+colonies.push({alliance: 150, x: 96, y: 363});
+colonies.push({alliance: 150, x: 92, y: 365});
+colonies.push({alliance: 150, x: 93, y: 366});
+colonies.push({alliance: 150, x: 92, y: 363});
+colonies.push({alliance: 150, x: 96, y: 365});
+colonies.push({alliance: 150, x: 22, y: 251});
+colonies.push({alliance: 150, x: 232, y: 253});
+colonies.push({alliance: 150, x: 229, y: 250});
+colonies.push({alliance: 150, x: 228, y: 251});
+colonies.push({alliance: 634, x: -154, y: 257});
+colonies.push({alliance: 1083, x: 126, y: 261});
+colonies.push({alliance: 1083, x: -116, y: 340});
+colonies.push({alliance: 1083, x: -57, y: 350});
+colonies.push({alliance: 907, x: -54, y: 351});
+colonies.push({alliance: 150, x: -220, y: 441});
+colonies.push({alliance: 150, x: -220, y: 454});
+colonies.push({alliance: 150, x: -242, y: 488});
+colonies.push({alliance: 26, x: -55, y: 350});
+colonies.push({alliance: 150, x: 72, y: 335});
+colonies.push({alliance: 150, x: 25, y: 387});
+colonies.push({alliance: 1070, x: -9, y: 323});
+colonies.push({alliance: 1070, x: -9, y: 321});
+colonies.push({alliance: 211, x: -68, y: 253});
+colonies.push({alliance: 211, x: -63, y: 260});
+var alliances = new Array();
+alliances[0] = {color : '#000000', name : 'un-allied'};
+alliances[1070] = {color : '#dc58e3', name : 'Idris'};
+alliances[1083] = {color : '#e5e63d', name : 'None'};
+alliances[150] = {color : '#7ef605', name : 'The Road'};
+alliances[211] = {color : '#eb1637', name : 'The Lazorblade Consortium'};
+alliances[26] = {color : '#4e732c', name : 'Culture'};
+alliances[273] = {color : '#4734ba', name : 'Nexus'};
+alliances[376] = {color : '#142949', name : 'Flatulent Kittens'};
+alliances[385] = {color : '#dc912a', name : 'Purple Tacos Star Union'};
+alliances[441] = {color : '#15d4e8', name : 'klatu'};
+alliances[634] = {color : '#6766aa', name : 'Avalon'};
+alliances[690] = {color : '#c06d06', name : 'S.M.A.'};
+alliances[7] = {color : '#8f14e4', name : 'The Understanding'};
+alliances[85] = {color : '#3ef815', name : 'Sea of Goats'};
+alliances[905] = {color : '#f57a2f', name : 'Tygrand'};
+alliances[907] = {color : '#621461', name : 'Helios Collective'};
+alliances[996] = {color : '#0b8aff', name : 'The Silent Death'};
+// there are 16 alliances in zone 0|1
+
+  $(function() {
+    var html = '';
+    html = '';
+    for (var i = 0; i < probes.length; i++) {
+        var x = probes[i].x+245;
+        var y = 245 - probes[i].y;
+        html = html
+            +"<div class='probe' style='left:"
+            +x
+            +"px; top:"
+            +y
+            +"px;'></div>";
+    }
+    $('#probes').html(html);
+    html = '';
+    for (var i = 0; i < stars.length; i++) {
+        var x = stars[i].x+245;
+        var y = 245 - stars[i].y;
+        var a = alliances[stars[i].alliance].color;
+        html = html + "<div class='alliance' style='left:"
+            +x
+            +"px; top:"
+            +y
+            +"px; background-color:"
+            +a
+            +";'></div>";
+    }
+    $('#stars').html(html);
+    html = '';
+    for (var i = 0; i < colonies.length; i++) {
+        var x = colonies[i].x+248;
+        var y = 748 - colonies[i].y;
+        var a = alliances[colonies[i].alliance].color;
+        html = html + "<div class='colony' style='left:"
+            +x
+            +"px; top:"
+            +y
+            +"px; background-color:"
+            +a
+            +";'></div>";
+    }
+    $('#colonies').html(html);
+    html = '';
+    alliances.forEach(function(elem) {
+        var color  = elem.color;
+        var name    = elem.name;
+        html = html + "<p><span class='colony' style='background-color: "
+            + color
+            + ";'></span>&nbsp;&nbsp;&nbsp; "
+            + name
+            + "</p>";
+    });
+    $('#alliances').html(html);
+
+    $('#show_probes').click(function() {
+        if ($('#show_probes').attr('checked')) {
+            $('#probes').removeClass('hidden');
+        }
+        else {
+            $('#probes').addClass('hidden');
+        }
+    });
+    $('#show_colonies').click(function() {
+        if ($('#show_colonies').attr('checked')) {
+            $('#colonies').removeClass('hidden');
+        }
+        else {
+            $('#colonies').addClass('hidden');
+        }
+    });
+    $('#show_stars').click(function() {
+        if ($('#show_stars').attr('checked')) {
+            $('#stars').removeClass('hidden');
+        }
+        else {
+            $('#stars').addClass('hidden');
+        }
+    });
+
+    html = '';
+    for (var i = 0; i < probes.length; i++) {
+        var x = probes[i].x+245;
+        var y = 245 - probes[i].y;
+        html = html
+            +"<div class='probe' style='left:"
+            +x
+            +"px; top:"
+            +y
+            +"px;'></div>";
+        $('#probes').html(html);
+    }
+    $(document).mousemove(function(e){
+        var offset = $('#zone').offset();
+        var x = Math.round(e.pageX -250 - offset.left);
+        var y = Math.round(offset.top - e.pageY + 500);
+        if (x < -250 || x > 250 || y < 500 || y > 500) {
+            $('#status').html('&nbsp;');
+        }
+        else {
+            $('#status').html(x +', '+ y);
+        }
+    });
+
+});
+
+
+        </script>
+    </head>
+    <body>
+        <div class="title">
+          <p>Show colonies: <input type="checkbox" id="show_colonies"></p>
+          <p>Show probes: <input type="checkbox" id="show_probes"></p>
+          <p>Show siezed stars: <input type="checkbox" id="show_stars"></p>
+        </div>
+        <h2 id="status">0,0</h2>
+        <div class="zone" id="zone">
+          <div id="probes" class="hidden">
+          </div>
+          <div id="stars" class="hidden">
+          </div>
+          <div id="colonies" class="hidden">
+          </div>
+        </div>
+        <div id = "alliances">
+          <p><span class='colony' style="background-color: #e03c1b;"></span>&nbsp;&nbsp;&nbsp; Culture</p>
+        </div>
+    </body>
+</html>
+
+
+
